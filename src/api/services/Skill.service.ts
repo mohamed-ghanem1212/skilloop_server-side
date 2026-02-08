@@ -3,6 +3,7 @@ import { SkillOffer, statusEnumOffer } from "../../types/skills.types";
 import { HydratedDocument } from "mongoose";
 import { BadRequestError, NotFoundError } from "../../utils/errors";
 import { skillOfferSchema } from "../../db/models/Skills";
+import { SECTION } from "../../types/skillData.types";
 
 export const createSkill = async (
   skills: SkillOffer,
@@ -65,4 +66,14 @@ export const removeSkillOffer = async (id: string) => {
     throw new NotFoundError("Skill not found");
   }
   return findSkillOffer;
+};
+
+export const getSkillOffersBySection = async (section: SECTION) => {
+  const skillOfferSection = await skillOfferSchema
+    .find({ section })
+    .populate("userId", "username email profilePicture role");
+  if (!skillOfferSection) {
+    throw new NotFoundError("Section not found.");
+  }
+  return skillOfferSection;
 };

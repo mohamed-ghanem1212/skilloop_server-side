@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createSkillOffer,
+  filterSkillOffersBySection,
   getAllSkillOffers,
   removeSkillOffer,
   skillIdGetter,
@@ -172,4 +173,61 @@ router.get("/getAllSkillOffers", getAllSkillOffers);
  */
 
 router.delete("/removeSkillOffer/:skillOfferId", removeSkillOffer);
+/**
+ * @swagger
+ * /api/v1/skillOffers/getSkillOffersBySection:
+ *   get:
+ *     summary: Get skill offers filtered by section
+ *     tags: [Skill Offers]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: section
+ *         required: true
+ *         schema:
+ *           type: string
+ *           enum: [Development, Art & Design, Business, Marketing, Other]
+ *         description: The section to filter skill offers by
+ *         example: Development
+ *     responses:
+ *       200:
+ *         description: Skill offers retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Skill offers retrieved successfully"
+ *                 skillOffers:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       wantSkill:
+ *                         type: string
+ *                       description:
+ *                         type: string
+ *                       status:
+ *                         type: string
+ *                       level:
+ *                         type: string
+ *                       section:
+ *                         type: string
+ *                       userId:
+ *                         type: object
+ *       400:
+ *         description: Invalid section parameter
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: No skill offers found for this section
+ *       500:
+ *         description: Server error
+ */
+router.get("/getSkillOffersBySection", auth, filterSkillOffersBySection);
 export default router;

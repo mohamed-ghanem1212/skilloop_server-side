@@ -60,3 +60,13 @@ export const removeSkill = async (id: string) => {
   }
   return removeSkill;
 };
+
+export const getAllSkillsBySection = async (section: SECTION) => {
+  const getSkills = await skillSchema
+    .find({ section })
+    .populate("userId", "username email role profilePicture");
+  if (!getSkills) {
+    throw new NotFoundError("Skill not found");
+  }
+  return getSkills;
+};

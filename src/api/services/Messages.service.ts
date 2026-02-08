@@ -9,8 +9,6 @@ export const createMessage = async (
   userId: string,
   text: string,
 ): Promise<HydratedDocument<Message>> => {
-  console.log("📝 Creating message:", { chatRoomId, userId, text });
-
   const chatRoom = await getChatRoomById(chatRoomId);
 
   const receiverId = chatRoom.participants.find(
@@ -24,13 +22,9 @@ export const createMessage = async (
     text: text,
   });
 
-  console.log("✅ Message created:", sendMessage._id);
-
   const populatedMessage = await messageSchema
     .findById(sendMessage._id)
     .populate("senderId", "username email profilePicture title");
-
-  console.log("✅ Message populated:", populatedMessage);
 
   return populatedMessage!;
 };

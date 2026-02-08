@@ -21,8 +21,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:3000",
-
+    origin: process.env.FRONTEND_URL,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
   }),
 );
@@ -73,7 +73,7 @@ const startServer = () => {
   connectDb().then(() => {
     server.listen(port, () => {
       console.log(
-        `Server is running at http://localhost:${process.env.PORT as string} \n${process.env.CLOUDINARY_URL}`,
+        `Server is running at http://localhost:${process.env.PORT as string}`,
       );
     });
   });

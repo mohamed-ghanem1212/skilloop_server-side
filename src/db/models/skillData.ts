@@ -26,7 +26,7 @@ const SkillSchema: Schema = new Schema(
     section: {
       type: String,
       required: true,
-      enum: ["Development", "Art & Design", "Business", "Marketing", "Other"],
+      enum: ["Development", "Art_Design", "Business", "Marketing", "Other"],
     },
   },
   { timestamps: true },

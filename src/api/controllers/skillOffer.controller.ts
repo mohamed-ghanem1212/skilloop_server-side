@@ -6,6 +6,7 @@ import { BadRequestError, NotFoundError } from "../../utils/errors";
 import { SkillOffer, statusEnumOffer } from "../../types/skills.types";
 import mongoose from "mongoose";
 import { SkillOfferCreator } from "../../validation/skillOffer.validator";
+import { SECTION } from "../../types/skillData.types";
 export const createSkillOffer = asyncHandler(
   async (req: requestUser, res: Response) => {
     const offerData = SkillOfferCreator.safeParse(req.body);
@@ -56,7 +57,6 @@ export const updateSkillOffer = asyncHandler(
   async (req: Request, res: Response) => {
     const { skillOfferId } = req.params;
     const { wantSkill, description, status } = req.body;
-    console.log(skillOfferId.valueOf());
 
     if (!mongoose.Types.ObjectId.isValid(skillOfferId)) {
       throw new BadRequestError("invalid skill offer ID");
@@ -86,5 +86,26 @@ export const removeSkillOffer = asyncHandler(
     return res
       .status(200)
       .json({ success: "Skill offer has been removed", removeSkill });
+  },
+);
+
+export const filterSkillOffersBySection = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { section } = req.query;
+    if (
+      !section ||
+      typeof section !== "string" ||
+      !Object.values(SECTION).includes(section as SECTION)
+    ) {
+      throw new BadRequestError("please pass a valid section");
+    }
+    const skillOffers = await skillService.getSkillOffersBySection(
+      section as SECTION,
+    );
+    return res.status(200).json({
+      message: "Discover skill offers with your interests",
+      success: true,
+      skillOffers,
+    });
   },
 );

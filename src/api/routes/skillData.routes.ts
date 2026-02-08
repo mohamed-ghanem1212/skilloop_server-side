@@ -3,6 +3,7 @@ import { auth } from "../middleware/token";
 import {
   createNewSkill,
   deleteSkill,
+  filterSkillsBySection,
   getAllSkills,
   getSkill,
   updateSkillData,
@@ -198,5 +199,65 @@ router.patch("/updateSkills/:skillId", auth, updateSkillData);
  *       404:
  *         description: Skill not found
  */
-router.delete("removeSkill/:skillId", auth, deleteSkill);
+router.delete("/removeSkill/:skillId", auth, deleteSkill);
+/**
+ * @swagger
+ * /api/v1/skills/getSkillsBySection:
+ *   get:
+ *     summary: Get skills filtered by section
+ *     tags: [Skills]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: section
+ *         required: true
+ *         schema:
+ *           type: string
+ *           enum: [Development, ArtDesign, Business, Marketing, Other]
+ *         description: The section to filter skills by
+ *         example: Development
+ *     responses:
+ *       200:
+ *         description: Skills retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Skills retrieved successfully"
+ *                 skills:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       skill:
+ *                         type: string
+ *                       description:
+ *                         type: string
+ *                       image:
+ *                         type: string
+ *                       section:
+ *                         type: string
+ *                       userId:
+ *                         type: object
+ *                         properties:
+ *                           _id:
+ *                             type: string
+ *                           username:
+ *                             type: string
+ *       400:
+ *         description: Invalid section parameter
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: No skills found for this section
+ *       500:
+ *         description: Server error
+ */
+router.get("/getSkillsBySection", auth, filterSkillsBySection);
 export default router;

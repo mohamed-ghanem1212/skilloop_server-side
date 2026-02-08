@@ -11,7 +11,7 @@ export interface Skill {
 
 export enum SECTION {
   DEVELOPMENT = "Development",
-  ART_DESING = "Art & Design",
+  ART_DESIGN = "Art_Design",
   BUSINESS = "Business",
   MARKETING = "Marketing",
   OTHER = "Other",
