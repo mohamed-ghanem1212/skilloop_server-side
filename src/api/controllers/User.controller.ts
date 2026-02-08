@@ -63,7 +63,7 @@ export const createNewUser = asyncHandler(
       .status(201)
       .cookie("access_token", token, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: "none",
       })
       .json({ message: "User Created", success: true, newUser });
@@ -89,7 +89,7 @@ export const signInUser = asyncHandler(async (req: Request, res: Response) => {
     .status(200)
     .cookie("access_token", token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "none",
     })
     .json({ user: user.userInfo, token, message: "Welcome to skilloop" });
