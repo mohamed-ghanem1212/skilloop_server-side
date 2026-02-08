@@ -72,9 +72,7 @@ app.use(errorHandler);
 const startServer = () => {
   connectDb().then(() => {
     server.listen(port, () => {
-      console.log(
-        `Server is running at http://localhost:${process.env.PORT as string}`,
-      );
+      console.log(`Server is running at ${process.env.FRONTEND_URL as string}`);
     });
   });
 };

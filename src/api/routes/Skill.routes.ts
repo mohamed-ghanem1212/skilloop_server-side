@@ -229,5 +229,5 @@ router.delete("/removeSkillOffer/:skillOfferId", removeSkillOffer);
  *       500:
  *         description: Server error
  */
-router.get("/getSkillOffersBySection", auth, filterSkillOffersBySection);
+router.get("/getSkillOffersBySection", filterSkillOffersBySection);
 export default router;

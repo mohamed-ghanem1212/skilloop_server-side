@@ -214,7 +214,7 @@ router.delete("/removeSkill/:skillId", auth, deleteSkill);
  *         required: true
  *         schema:
  *           type: string
- *           enum: [Development, ArtDesign, Business, Marketing, Other]
+ *           enum: [Development, Art_Design, Business, Marketing, Other]
  *         description: The section to filter skills by
  *         example: Development
  *     responses:
@@ -259,5 +259,5 @@ router.delete("/removeSkill/:skillId", auth, deleteSkill);
  *       500:
  *         description: Server error
  */
-router.get("/getSkillsBySection", auth, filterSkillsBySection);
+router.get("/getSkillsBySection", filterSkillsBySection);
 export default router;
