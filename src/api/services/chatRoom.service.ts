@@ -31,7 +31,6 @@ export const createChatRoom = async (
       "You already have a chat room for this provider go to the chat page",
     );
   }
-  console.log(participants.length);
 
   const createChatRoom = await chatRoomSchema.create({
     participants,
@@ -73,7 +72,6 @@ export const getChatUsers = async (userId: string) => {
     })
     .filter(Boolean);
 
-  console.log();
   return chatUsers;
 };
 
