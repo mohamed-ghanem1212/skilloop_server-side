@@ -22,7 +22,7 @@ export const auth = asyncHandler(
       token = req.cookies.access_token;
     }
     if (token === undefined) {
-      throw new UnauthorizedError("No token provided");
+      throw new UnauthorizedError("Not authorized, please login");
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
     if (!decoded) {
